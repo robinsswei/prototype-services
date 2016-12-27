@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Service Controler</title>
+  <!-- Loader -->
+  <script type="text/javascript" src="js/libs/pace.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="assets/styles/loader-bar.css">
+
+  <!-- Libraries -->
+  <script type="text/javascript" src="js/libs/jquery.min.js"></script>
+  <script type="text/javascript" src="js/libs/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="js/libs/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/libs/underscore-min.js"></script>
+  <!--<script type="text/javascript" src="js/libs/d3.v3.min.js"></script>-->
+
+  <!-- Main Styles -->
+  <link rel="stylesheet" type="text/css" href="assets/styles/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="assets/styles/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/styles/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/styles/serviceView.css">
+
+</head>
+<body>
+  <nav role="navigation" class="navbar navbar-inverse">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="#" class="navbar-brand">Mosaixsoft</a>
+    </div>
+    <!-- Collection of nav links, forms, and other content for toggling -->
+    <div id="navbarCollapse" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Home</a></li>
+          <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Navigation<b class="caret"></b></a>
+              <div class="dropdown-menu multi-column">
+                <div class="row menu-row no-gutter">
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><div><i class="fa fa-cloud fa-5x" aria-hidden="true"></i></div>Cloud Graph</a></li>
+                            <li><a href="#"><div><i class="fa fa-sitemap fa-5x" aria-hidden="true"></i></div>Autoscaler</a></li>
+                            <li><a href="#"><div><i class="fa fa-tv fa-5x" aria-hidden="true"></i></div>Monitoring</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><div><i class="fa fa-thermometer-2 fa-5x" aria-hidden="true"></i></div>Heatmap</a></li>
+                            <li><a href="#"><div><i class="fa fa-share-alt fa-5x" aria-hidden="true"></i></div>Connectivity</a></li>
+                            <li><a href="#"><div><i class="fa fa-terminal fa-5x" aria-hidden="true"></i></div>Command Line Interface</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><div><i class="fa fa-gamepad fa-5x" aria-hidden="true"></i></div>Service Controller</a></li>
+                            <li><a href="#"><div><i class="fa fa-send fa-5x" aria-hidden="true"></i></div>Workload Dispatcher</a></li>
+                            <li><a href="#"><div><i class="fa fa-cubes fa-5x" aria-hidden="true"></i></div>Software Versions</a></li>
+                        </ul>
+                    </div>
+                </div>
+              </div>
+          </li>
+          <li class="dropdown">
+          <a href="#" id="profile" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#" id="username_field"></a></li>
+            <li><a href="#" onclick="copyToClipboard(document.getElementById('authToken_field').class)" id="authToken_field"></a></li>
+            <li><a href="#" id="changePass">Change Password</a></li>
+          </ul>
+        </li>
+          <li><a href="#">Logout</a></li>
+        </ul>
+
+        <form role="search" class="navbar-form navbar-right">
+            <div class="form-group">
+                <input type="text" placeholder="Search" class="form-control">
+            </div>
+        </form>
+    </div>
+  </nav>
+  
+  <!-- Main Content-->
+  <div class="container" id="wrapper">
+  	<div class="row">
+  		<h1>List of Services</h1>
+      <nav class="navbar navbar-default query" role="query">
+          <div class="container-fluid">
+              <div class="navbar-header">
+                  <a class="navbar-barnd" href="javascript:void(0);">Service ID</a>
+              </div>
+              <div class="collapse navbar-collapse" id="">
+                  <div class="navbar-form navbar-left">
+                      <input type="text" class="form-control" />
+                      <button class="btn btn-default">Search</button>
+                  </div>
+                  <button class="btn btn-primary create pull-right" data-toggle="modal" data-target="#addService"><i class="glyphicon glyphicon-plus"></i>Add a Service</button>
+              </div>
+              
+          </div>
+      </nav>
+      <div class="table-responsive col-md-12">
+          <table class="table table-striped table-hover">
+              <thead>
+                  <tr>
+                      <th>Service ID</th><th>Service Name</th><th>Service Type</th>
+                      <th>Status</th><th>Created Time</th><th>Operations</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td><p>01</p></td>
+                      <td><p>yamlSample1</td>
+                      <td><p>VM</p></td>
+                      <td><p><span class="label label-success">Request</span></p></td>
+                      <td><p>2016-12-24</p></td>
+                      <td class="col-md-2"><p>
+                        <a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> 
+                        <a class="btn btn-danger btn-xs" href="#"><span class="glyphicon glyphicon-remove"></span> Del</a>
+                      </p></td>
+                  </tr>
+                  <tr>
+                      <td><p>02</p></td>
+                      <td><p>yamlSample2</td>
+                      <td><p>Auto Scaler Group</p></td>
+                      <td><p><span class="label label-warning">Pending</span></p></td>
+                      <td><p>2016-12-24</p></td>
+                      <td class="col-md-2"><p>
+                        <a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> 
+                        <a class="btn btn-danger btn-xs" href="#"><span class="glyphicon glyphicon-remove"></span> Del</a>
+                      </p></td>
+                  </tr>
+                  <tr>
+                      <td><p>03</p></td>
+                      <td><p>yamlSample3</td>
+                      <td><p>VM</p></td>
+                      <td><p><span class="label label-danger">Failed</span></p></td>
+                      <td><p>2016-12-26</p></td>
+                      <td class="col-md-2"><p>
+                        <a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> 
+                        <a class="btn btn-danger btn-xs" href="#"><span class="glyphicon glyphicon-remove"></span> Del</a>
+                      </p></td>
+                  </tr>
+                  <tr>
+                      <td><p>04</p></td>
+                      <td><p>yamlSample4</td>
+                      <td><p>Load Balancing</p></td>
+                      <td><p><span class="label label-success">Running</span></p></td>
+                      <td><p>2016-12-24</p></td>
+                      <td class="col-md-2"><p>
+                        <a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> 
+                        <a class="btn btn-danger btn-xs" href="#"><span class="glyphicon glyphicon-remove"></span> Del</a>
+                      </p></td>
+                  </tr>
+                  <tr>
+                      <td><p>05</p></td>
+                      <td><p>yamlSample5</td>
+                      <td><p>VM</p></td>
+                      <td><p><span class="label label-default">Failed</span></p></td>
+                      <td><p>2016-12-24</p></td>
+                      <td class="col-md-2"><p>
+                        <a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> 
+                        <a class="btn btn-danger btn-xs" href="#"><span class="glyphicon glyphicon-remove"></span> Del</a>
+                      </p></td>
+                  </tr>
+                  <tr>
+                      <td><p>06</p></td>
+                      <td><p>yamlSample6</td>
+                      <td><p>Container</p></td>
+                      <td><p><span class="label label-success">Request</span></p></td>
+                      <td><p>2016-12-24</p></td>
+                      <td class="col-md-2"><p>
+                        <a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> 
+                        <a class="btn btn-danger btn-xs" href="#"><span class="glyphicon glyphicon-remove"></span> Del</a>
+                      </p></td>
+                  </tr>
+                  
+              </tbody>
+          </table>
+      </div>
+      <div class="pull-right">
+          <ul class="pagination">
+              <li><a href="#"><<</a></li>
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">>></a></a></li>
+          </ul>
+      </div>
+  	</div>
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">Service Details</div>
+        <div class="panel-body">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            Left
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            Right
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="addService" tabindex="-1" role="dialog" aria-labelledby="addService">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+
+            <div class="col-lg-12">
+                <h1 class="page-header">Samples</h1>
+            </div>
+
+            <div class="col-lg-1 col-md-1 col-xs-2 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive" src="http://placehold.it/50x40" alt="">
+                </a>
+            </div>
+            <div class="col-lg-1 col-md-1 col-xs-2 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive" src="http://placehold.it/50x40" alt="">
+                </a>
+            </div>
+            <div class="col-lg-1 col-md-1 col-xs-2 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive" src="http://placehold.it/50x40" alt="">
+                </a>
+            </div>
+            <div class="col-lg-1 col-md-1 col-xs-2 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive" src="http://placehold.it/50x40" alt="">
+                </a>
+            </div>
+            <div class="col-lg-1 col-md-1 col-xs-2 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive" src="http://placehold.it/50x40" alt="">
+                </a>
+            </div>
+            <div class="col-lg-1 col-md-1 col-xs-2 thumb">
+                <a class="thumbnail" href="#">
+                    <img class="img-responsive" src="http://placehold.it/50x40" alt="">
+                </a>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script type="text/javascript" src="js/views/serviceView.js"></script>
+
+</body>
+</html>
